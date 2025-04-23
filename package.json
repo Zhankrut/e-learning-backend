@@ -1,0 +1,18 @@
+{
+  "name": "e-learning-backend",
+  "version": "1.0.0",
+  "description": "a backend for an e-learning platform",
+  "license": "ISC",
+  "author": "zhankrut",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  }
+}
