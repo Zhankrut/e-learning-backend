@@ -4,10 +4,10 @@
   "description": "a backend for an e-learning platform",
   "license": "ISC",
   "author": "zhankrut",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "start"
+    "dev": "nodemon -r dotenv/config src/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
