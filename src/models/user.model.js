@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import e from 'express';
 
 
 const userSchema = new mongoose.Schema({
@@ -33,7 +34,9 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: string,
-        required: [true, " the role must be selected "]
+        required: [true, " the role must be selected "],
+        enum: ["admin", "student", "faculty"],
+        default: "user",
     },
     refreshToken: {
         type: String,
