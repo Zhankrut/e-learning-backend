@@ -11,19 +11,14 @@ const LessonResourceSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    trim: true 
+
   },
   url: {
     type: String,
     required: true,
-    trim: true
+
   },
-  resourceType: {
-    type: String,
-    required: true,
-    enum: ['link'], 
-    trim: true
-  }
+
 });
 
 export const LessonResource = mongoose.model('LessonResource', LessonResourceSchema);

@@ -16,6 +16,12 @@ const moduleSchema = new mongoose.Schema({
         ref: "Module",
         required: true
     },
+    contentURL: {
+        type: String,
+        required: true,
+    },
     
 
 },{ timestamps: true });
+
+export const Lesson = mongoose.model("Lesson", moduleSchema);
