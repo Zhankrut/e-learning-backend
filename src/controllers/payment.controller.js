@@ -7,8 +7,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 const createPayment = asyncHandler(async (req, res) => {});
 
 // delete payment
-const deletePayment = asyncHandler(async (req, res) => {
-});
+const deletePayment = asyncHandler(async (req, res) => { });
 
 
 export {

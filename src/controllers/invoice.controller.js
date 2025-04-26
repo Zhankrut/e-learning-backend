@@ -2,7 +2,7 @@ import { Invoice  } from "../models/invoice.model.js";
 import { Course } from "../models/course.model.js"; 
 import { User } from "../models/user.model.js";
 
-import {ayncHandler} from "../middleware/async.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError} from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
