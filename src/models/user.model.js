@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is required"], // we can add a custom message to all required fields
     },
     role: {
-        type: string,
+        type: String,
         required: [true, " the role must be selected "],
         enum: ["admin", "student", "faculty"],
         default: "student",
