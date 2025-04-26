@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
         type: string,
         required: [true, " the role must be selected "],
         enum: ["admin", "student", "faculty"],
-        default: "user",
+        default: "student",
     },
     refreshToken: {
         type: String,

@@ -6,9 +6,9 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    video: {
+    lesson: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Video"
+        ref: "Lesson"
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
