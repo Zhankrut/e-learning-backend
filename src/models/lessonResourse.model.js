@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-
-
 const LessonResourceSchema = new mongoose.Schema({
   lessonId: {
     type: mongoose.Schema.Types.ObjectId,
