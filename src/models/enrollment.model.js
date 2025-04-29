@@ -13,10 +13,15 @@ const enrollmentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["active", "completed", "dropped"],
-        default: "active"
+        enum: ["pending", "completed", "failed"],
+        default: "pending"
     },
 
 },{timestamps: true});
+
+enrollmentSchema.methods.changeStatus = function (newStatus) {
+    this.status = newStatus;
+    return this.save();
+}
 
 export const Enrollment = mongoose.model("Enrollment", enrollmentSchema);

@@ -24,12 +24,19 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         enum: ["pending", "completed", "failed"],
         default: "pending"
-    },
-    paymentMethod: {
-        type: String,
-        enum: ["credit_card", "paypal", "bank_transfer"],
-        required: true
-    },
+    }
+   
 }, {timestamps: true});
+
+paymentSchema.pre("save", async function (next) {
+    if (!this.isModified("status")) return next(); // if the status is not modified then return next
+    this.status = "pending"; // set the status to pending by default
+    next();
+});
+
+paymentSchema.methods.updateStatus = async function (status) {
+    this.status = status; // update the status
+    await this.save(); // save the changes to the database
+}
 
 export const Payment = mongoose.model("Payment", paymentSchema);
