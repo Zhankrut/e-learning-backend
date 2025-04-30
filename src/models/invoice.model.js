@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+//TODO: add more fields to the invoice model
 
 const invoiceSchema = new mongoose.Schema({
     userId: {
