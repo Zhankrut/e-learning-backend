@@ -7,9 +7,18 @@ import { asyncHandler } from "../utils/asyncHandler";
 // create category
 const createCategory = asyncHandler(async (req, res) => {
     const { name, description } = req.body;
-
+    const { userId } = req.user?._id;
     if (!name || !description) {
         throw new ApiError(400, "Please provide all required fields");
+    }
+    if (!userId) {
+        throw new ApiError(400, "Invalid user ID");
+    }
+
+    const isValidUser = await User.findById(userId).select("role");
+    const allowedRoles = ["admin", "faculty"];
+    if (!allowedRoles.includes(isValidUser.role)) {
+        throw new ApiError(403, "You are not authorized to create a module");
     }
 
     const existingCategory = await Category.findOne({ name });
@@ -51,12 +60,21 @@ const getAllCategories = asyncHandler(async (req, res) => {
 // delete category 
 const deleteCatagory = asyncHandler(async (req, res) => {
     const { catagoryId } = req.params;
+    const { userId } = req.user?._id;
+    if (!userId) {
+        throw new ApiError(400, "Invalid user ID");
+    }
 
     if (!catagoryId) {
         throw new ApiError(400, "Invalid course ID");
     }
     if (!isValidObjectId(catagoryId)) {
         throw new ApiError(400, "Invalid course ID");
+    }
+    const isValidUser = await User.findById(userId).select("role");
+    const allowedRoles = ["admin", "faculty"];
+    if (!allowedRoles.includes(isValidUser.role)) {
+        throw new ApiError(403, "You are not authorized to create a module");
     }
 
     const deletedCatagory = await Category.findByIdAndDelete(catagoryId);
