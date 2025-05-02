@@ -22,7 +22,7 @@ const createLesson = asyncHandler(async (req, res) => {
     }
 
     const isValidUser = await User.findById(userId).select("role");
-    if (isValidUser.role !== "admin" || isValidUser.role !== "faculty") {
+    if (isValidUser.role !== "admin" && isValidUser.role !== "faculty") {
         throw new ApiError(403, "You are not authorized to create a lesson");
     }
     // TODO : write code to upload the video to cloudinary and get the url
@@ -64,7 +64,7 @@ const updateLesson = asyncHandler(async (req, res) => {
     }
 
     const isValidUser = await User.findById(userId).select("role");
-    if (isValidUser.role !== "admin" || isValidUser.role !== "faculty") {
+    if (isValidUser.role !== "admin" && isValidUser.role !== "faculty") {
         throw new ApiError(403, "You are not authorized to create a lesson");
     }
     // TODO : write code to upload the video to cloudinary and get the url
@@ -98,7 +98,7 @@ const deleteLesson = asyncHandler(async (req, res) => {
     }
 
     const isValidUser = await User.findById(userId).select("role");
-    if (isValidUser.role !== "admin" || isValidUser.role !== "faculty") {
+    if (isValidUser.role !== "admin" && isValidUser.role !== "faculty") {
         throw new ApiError(403, "You are not authorized to create a lesson");
     }
 
