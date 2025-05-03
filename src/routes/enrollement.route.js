@@ -5,7 +5,7 @@ import {
     updateEnrollment,
     deleteEnrollment
 } from "../controllers/enrollment.controller.js";
-import { authenticate } from "../middlewares/auth.middleware.js";
+import { authenticate } from "../middleware/auth.middleware.js";
 
 const router = Router();
 

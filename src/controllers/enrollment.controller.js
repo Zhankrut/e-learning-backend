@@ -1,8 +1,8 @@
-import { Enrollment } from "../models/enrollment.model";
-import { Course } from "../models/course.model";
-import { User } from "../models/user.model";
+import { Enrollment } from "../models/enrollment.model.js";
+import { Course } from "../models/course.model.js";
+import { User } from "../models/user.model.js";
 import { Payment } from "../models/payment.model.js";
-import { asyncHandler } from "../middleware/asyncHandler.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { isValidObjectId } from "mongoose";

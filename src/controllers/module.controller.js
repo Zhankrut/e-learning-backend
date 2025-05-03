@@ -134,6 +134,7 @@ const deleteModule = asyncHandler(async (req, res) => {
 export {
     createModule,
     updateModule,
-    deleteModule
+    deleteModule,
+    getAllModules
 }
 

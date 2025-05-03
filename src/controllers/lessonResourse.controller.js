@@ -1,8 +1,8 @@
-import { LessonResource } from "../models/lessonResourse.model";
-import { Lesson } from "../models/lesson.model";
-import { asyncHandler } from "express-async-handler";
-import { ApiError } from "../utils/ApiError";
-import { ApiResponse } from "../utils/ApiResponse";
+import { LessonResource } from "../models/lessonResourse.model.js";
+import { Lesson } from "../models/lesson.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 import { isValidObjectId } from "mongoose";
 
 // create a lesson resource
