@@ -134,9 +134,10 @@ const deleteProfile = asyncHandler(async (req, res) => {
     if (!profile) {
         throw new ApiError(400, " the profile cannot be deleted ");
     }
+    let profilePicture  = profile.profilePicture.split("/").at(-1).split(".").at(0);
 
-    const deleteProfilePicture = await deleteOnCloudinary(profile.profilePicture);
-
+    const deleteProfilePicture = await deleteOnCloudinary(profilePicture);
+    console.log(deleteProfilePicture);
     if (!deleteProfilePicture) {
         throw new ApiError(400, " the profile picture cannot be deleted ");
     }
