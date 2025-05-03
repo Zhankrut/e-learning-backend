@@ -12,5 +12,5 @@ const storage = multer.diskStorage({
         // the file will be saved in the temp folder for too short amount of time and then it will be deleted
     }
 });
-
+console.log("multer middleware is working fine");
 export const upload = multer({ storage });

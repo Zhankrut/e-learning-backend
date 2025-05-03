@@ -7,7 +7,8 @@ import { uploadOnCloudinary, deleteOnCloudinary } from '../utils/cloudinary.js';
 
 // create profile 
 const createProfile = asyncHandler(async (req, res) => {
-    const { userId } = req.user?._id;
+
+    const userId = req.user?._id;
     const { bio } = req.body;
 
     if (!userId) {
@@ -17,9 +18,9 @@ const createProfile = asyncHandler(async (req, res) => {
     if (!bio || bio === "") {
         throw new ApiError(400, " there is no bio provided ");
     }
-
-    const profilePictureFile = req.files?.profilePicture[0]?.path;
-
+    console.log(req.file);
+    const profilePictureFile = req.file?.path;
+    console.log(profilePictureFile);
     if (!profilePictureFile) {
         throw new ApiError(400, "Avatar is required");
     }
@@ -30,16 +31,15 @@ const createProfile = asyncHandler(async (req, res) => {
         throw new ApiError(400, " the profile cannot be created ");
     }
 
-    const user = await  Profile.create({
+    const user = await Profile.create({
         bio,
         profilePicture: profile.url,
         lastlogin: Date.now(),
         userID: userId
     });
 
-    const createdProfile = await Profile.findById(user._id);
 
-    if (!createdProfile) {
+    if (!user) {
         throw new ApiError(400, " the profile cannot be created ");
     }
 
@@ -51,13 +51,13 @@ const createProfile = asyncHandler(async (req, res) => {
     return res
         .status(200)
         .json(
-            new ApiResponse(200, createdProfile, " the profile has been created successfully ")
+            new ApiResponse(200, user, " the profile has been created successfully ")
         )
 });
 
 //update profile 
-const updateProfile = asyncHandler(async (req, res) => { 
-    const { userId } = req.user?._id;
+const updateProfile = asyncHandler(async (req, res) => {
+    const userId = req.user?._id;
     const { bio } = req.body;
 
     if (!userId) {
@@ -68,8 +68,7 @@ const updateProfile = asyncHandler(async (req, res) => {
         throw new ApiError(400, " there is no bio provided ");
     }
 
-    const profilePictureFile = req.files?.profilePicture[0]?.path;
-
+    const profilePictureFile = req.file?.path;
     if (!profilePictureFile) {
         throw new ApiError(400, "Avatar is required");
     }
@@ -88,7 +87,7 @@ const updateProfile = asyncHandler(async (req, res) => {
         },
         { new: true }
     );
-    
+
 
     if (!user) {
         throw new ApiError(400, " the profile cannot be updated ");
@@ -102,8 +101,8 @@ const updateProfile = asyncHandler(async (req, res) => {
 });
 
 //get profile by user id 
-const getProfileByUserId = asyncHandler(async (req, res) => { 
-    const { userId } = req.user?._id;
+const getProfileByUserId = asyncHandler(async (req, res) => {
+    const userId  = req.user?._id;
 
     if (!userId) {
         throw new ApiError(400, " the user cannot be found ");
@@ -123,8 +122,8 @@ const getProfileByUserId = asyncHandler(async (req, res) => {
 });
 
 // delete user profile 
-const deleteProfile = asyncHandler(async (req, res) => { 
-    const { userId } = req.user?._id;
+const deleteProfile = asyncHandler(async (req, res) => {
+    const  userId  = req.user?._id;
 
     if (!userId) {
         throw new ApiError(400, " the user cannot be found ");
