@@ -1,4 +1,4 @@
-import {asyncHandler} from '../utils/asyncHandler.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 import { User } from '../models/user.model.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
@@ -11,10 +11,8 @@ const generateAccessAndRefreshToken = async ({ userId }) => {
         const user = await User.findById(userId);
         const accessToken = user.generateAccessToken();
         const refreshToken = user.generateRefreshToken();
-
         user.refreshToken = refreshToken;
-        user.save(validateBeforeSave = false);
-
+        await user.save({ validateBeforeSave: false });
         return { accessToken, refreshToken };
     } catch (error) {
         throw new ApiError(500, "Something went wrong while generating access and refress token ", error);
@@ -23,9 +21,9 @@ const generateAccessAndRefreshToken = async ({ userId }) => {
 
 // register user 
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstName, LastName, email, password, role } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
 
-    if ([firstName, LastName, email, password, role].some(field => (field.trim() === ""))) {
+    if ([firstName, lastName, email, password, role].some(field => (field.trim() === ""))) {
         throw new ApiError(400, " all fields are required ");
     }
 
@@ -34,7 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const existedUser = await User.findOne({
-        email: email.tolowerCase()
+        email: email.toLowerCase()
     })
 
     if (existedUser) {
@@ -43,7 +41,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     const user = await User.create({
         firstName,
-        LastName,
+        lastName,
         email: email.toLowerCase(),
         password,
         role
@@ -140,7 +138,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 // refresh token
 const refreshAccessToken = asyncHandler(async (req, res) => {
-    const { refreshToken } = req.cookies.drefreshToken || req.body.refreshToken;
+    const  refreshToken  = req.cookies?.refreshToken || req.body?.refreshToken;
 
     if (!refreshToken) {
         throw new ApiError(400, " the refresh token is required ");
@@ -179,13 +177,17 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 // change password 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-    const { currentPassword, newPassword } = req.body;
+    const { email, currentPassword, newPassword } = req.body;
 
-    if ([currentPassword, newPassword].some(field => (field.trim() === ""))) {
+    if ([email,currentPassword, newPassword].some(field => (field.trim() === ""))) {
         throw new ApiError(400, " all fields are required ");
     }
 
-    const user = await User.findById(req.user._id).select("+password");
+    const user = await User.findById(req.user._id).select("+password +email");
+
+    if (!user.email === email) {
+        throw new ApiError(400, " the email is not valid ");
+    }
 
     if (!user) {
         throw new ApiError(400, " the user is not found ");
@@ -197,7 +199,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     }
 
     user.password = newPassword;
-    await user.save(validateBeforeSave = false);
+    await user.save({validateBeforeSave : false});
 
     return res
         .status(200)
@@ -242,7 +244,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email.toLowerCase();
-    await user.save(validateBeforeSave = false);
+    await user.save({validateBeforeSave :false});
 
     return res
         .status(200)
